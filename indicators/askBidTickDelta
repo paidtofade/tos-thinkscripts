@@ -20,18 +20,20 @@ def TicksBID = tick_count(priceType = PriceType.BID);
 
 def diff = (TicksASK - TicksBID);
 
+input conditionalHighlight = no;
 input highlightBelow = 5;
 input highlightAbove = 20;
 
-def highlight = 
-  AbsValue(diff) < highlightBelow 
+def highlight =
+  !conditionalHighlight
+  or AbsValue(diff) < highlightBelow
   or AbsValue(diff) > highlightAbove;
 
 plot p = diff;
 p.SetPaintingStrategy(PaintingStrategy.HISTOGRAM);
 p.AssignValueColor(
   if !highlight then color.GRAY
-  else if diff > 0 then color.GREEN 
+  else if diff > 0 then color.GREEN
   else color.RED
 );
 p.SetDefaultColor(Color.RED);
