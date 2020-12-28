@@ -249,7 +249,7 @@ def anchorDate = (yearPart * 10000) + (monthPart * 100) + dayPart;
 def anchorTime = (hourPart * 100) + minutePart;
 
 def postAnchorDate = if GetYYYYMMDD()  >= anchorDate then 1 else 0;
-def postAnchorTime = if SecondsFromTime(anchorTime) >= 0 then 1 else 0;
+def postAnchorTime = if SecondsFromTime(anchorTime)[1] < 0 and SecondsFromTime(anchorTime) >= 0 then 1 else 0;
 def postAnchor = if postAnchorDate == 1 and postAnchorTime == 1 then 1 else postAnchor[1];
 
 def volumeSum;
