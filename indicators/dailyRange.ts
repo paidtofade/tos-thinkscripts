@@ -19,9 +19,9 @@ declare upper;
 
 input rangeType = { default ATR, ADR, StdDev };
 input averageType = AverageType.SIMPLE;
-input length = 20;
+input length = 5;
 input multiplier = 1.0;
-input baseLineType = { default TodayOpen, YesterdayClose };
+input baseLineType = { default Close, Open };
 input showBaseLine = yes;
 
 def dayOpen = open(period = AggregationPeriod.DAY);
@@ -40,7 +40,7 @@ switch (rangeType) {
       dailyRange = MovingAverage(averageType, dayHigh - dayLow, length);
 }
 
-def baseLineVal = if baseLineType == baseLineType.TodayOpen then dayOpen else dayClose[1];
+def baseLineVal = if baseLineType == baseLineType.Open then dayOpen else dayClose[1];
 
 plot rangeHigh = baseLineVal + ((dailyRange[1] / 2) * multiplier);
 plot rangeLow = baseLineVal - ((dailyRange[1] / 2) * multiplier);
